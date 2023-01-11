@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -39,32 +40,6 @@ void boxes_task() {
     cout << msg << endl;
 }
 
-const int MAX_SIZE = 10000000;
-long long simples[MAX_SIZE];
-
-long long find_last_simple(long long limit) {
-    long long n = 1, size = 0, i;
-    while (++n < limit) {
-        int found = 1;
-        for (i = 0; i < size; ++i) {
-            if (n % simples[i] == 0) {
-                found = 0;
-                break;
-            }
-            if (i * i > n) break;
-        }
-        if (found) {
-            if (size < MAX_SIZE - 1) {
-                simples[size++] = n;
-            } else {
-                cout << "Max size reached at " << n << endl;
-                break;
-            }
-        }
-    }
-    cout << "Array size: " << size << endl;
-    return simples[size-1];
-}
 
 int min_divisor(int n){
     int i = 2;
@@ -114,43 +89,84 @@ void square_equation() {
     }
 }
 
+
 void equation_system() {
     /*
-    ax + by = e   e b << dx   a e << dy
-    cx + dy = f   f d         c f
+    ax + by = e  |  e b << dx  |  a e << dy
+    cx + dy = f  |  f d        |  c f
+    case when a == b == e == 0 simplified with first equation replaced with second
     */
-    double a, b, c, d, e, f, dt, dx, dy, y, x, n, k;
+    double a, b, c, d, e, f, dt, dx, dy;
     cin >> a >> b >> c >> d >> e >> f;
     dt = a * d - b * c;
     dx = e * d - b * f;
     dy = a * f - e * c;
-    if (dt != 0) cout << "2 " << dx / dt << " " << dy / dt << endl;
-    else if (dx == 0 && dy == 0) {
-        if (a == 0 && b == 0 && c == 0 && d == 0) {
-            if (e == 0 && f == 0) cout << "5" << endl;
-            else cout << "0" << endl;
-        } else {
-            if (a == 0 && c == 0) {
-                if (b == 0) y = f / d;
-                else y = e / b;
-                cout << "4 " << y << endl;
-            } else {
-                if (b == 0 && d == 0) {
-                    if (a == 0) x = f / c;
-                    else x = e / a;
-                    cout << "3 " << x << endl;
-                } else {
-                    if (b == 0) {
-                        n = f / d;  k = - c / d;
-                    } else
-                    {
-                        n = e / b;  k = - a / b;
-                    }
-                    cout << "1 " << k << " " << n << endl;
-                }
+
+    if (a == 0 && b == 0 && e == 0) { a = c; b = d; e = f; }    // helps to simplify part 1, 3, 4
+
+    if (dt != 0)
+        cout << "2 " << dx / dt << " " << dy / dt << endl;      // prev task case
+    else if (dx != 0 || dy != 0 || a == 0 && b == 0 && e != 0)
+        cout << "0" << endl;                                    // non-zero dx, dy or 0*x+0*y = e (e != 0)
+    else if (a != 0 && b != 0)
+        cout << "1 " << - a / b << " " << e / b << endl;        // unlimited with y = k * x + n
+    else if (b != 0)
+        cout << "4 " << e / b << endl;
+    else if (a != 0)
+        cout << "3 " << e / a << endl;
+    else
+        cout << "5" << endl;
+ }
+
+
+const int MAX_SZ = 10000000;
+int st_simples[MAX_SZ];
+
+
+int find_last_simple_static(int limit) {
+    int size = 1, n = 3;
+    st_simples[0] = 2;
+    while (n <= limit) {
+        bool found = true;
+        int square = 1 + (int)sqrt(n);
+        for (int i = 0; i < size; i++) {
+            int tmp = st_simples[i];
+            if (n % tmp == 0) {
+                found = false;
+                break;
             }
-
+            if (tmp > square) break;
         }
-    } else cout << "0" << endl;
-
+        if (found) {
+            if (size < MAX_SZ)
+                st_simples[size++] = n;
+            else {
+                cout << "Max size reached at " << n << endl;
+                break;
+            }
+        }
+        n += 2;
+    }
+    cout << "Array size: " << size << endl;
+    return st_simples[size - 1];
 }
+
+int find_last_simple(int limit) {
+    const int MAX_SIZE = 10000000;
+    vector <int> simples(1, 2);
+    for (int n = 3; n <= limit; n += 2) {
+        bool found = true;
+        int square = 1 + (int) sqrt(n);
+        for (auto i : simples) {
+            if (n % i == 0) {
+                found = false;
+                break;
+            }
+            if (i > square) break;
+        }
+        if (found) simples.push_back(n);
+    }
+    cout << "Array size: " << simples.size() << endl;
+    return simples.back();
+}
+

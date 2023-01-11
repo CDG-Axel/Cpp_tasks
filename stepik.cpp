@@ -98,10 +98,10 @@ int min_distance() {
 void square_equation() {
     double a, b, c;
     cin >> a >> b >> c;
-    if (!a)
-        if (b) cout << "1 " << -c / b << endl;
+    if (a == 0)
+        if (b != 0) cout << "1 " << -c / b << endl;
         else {
-            if (c) cout << "0" << endl;
+            if (c != 0) cout << "0" << endl;
             else cout << "3" << endl;
         }
     else {
@@ -112,4 +112,45 @@ void square_equation() {
             else cout << "2 " << b - sqrt(a) << " " << b + sqrt(a);
         } else cout << "0 ";
     }
+}
+
+void equation_system() {
+    /*
+    ax + by = e   e b << dx   a e << dy
+    cx + dy = f   f d         c f
+    */
+    double a, b, c, d, e, f, dt, dx, dy, y, x, n, k;
+    cin >> a >> b >> c >> d >> e >> f;
+    dt = a * d - b * c;
+    dx = e * d - b * f;
+    dy = a * f - e * c;
+    if (dt != 0) cout << "2 " << dx / dt << " " << dy / dt << endl;
+    else if (dx == 0 && dy == 0) {
+        if (a == 0 && b == 0 && c == 0 && d == 0) {
+            if (e == 0 && f == 0) cout << "5" << endl;
+            else cout << "0" << endl;
+        } else {
+            if (a == 0 && c == 0) {
+                if (b == 0) y = f / d;
+                else y = e / b;
+                cout << "4 " << y << endl;
+            } else {
+                if (b == 0 && d == 0) {
+                    if (a == 0) x = f / c;
+                    else x = e / a;
+                    cout << "3 " << x << endl;
+                } else {
+                    if (b == 0) {
+                        n = f / d;  k = - c / d;
+                    } else
+                    {
+                        n = e / b;  k = - a / b;
+                    }
+                    cout << "1 " << k << " " << n << endl;
+                }
+            }
+
+        }
+    } else cout << "0" << endl;
+
 }

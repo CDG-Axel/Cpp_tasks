@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -91,4 +92,24 @@ int min_distance() {
     }
     // в min_len будет начальное большое значение, если мы не нашли двух локальных максимумов
     return min_len == 99999999 ? 0 : min_len;
+}
+
+
+void square_equation() {
+    double a, b, c;
+    cin >> a >> b >> c;
+    if (!a)
+        if (b) cout << "1 " << -c / b << endl;
+        else {
+            if (c) cout << "0" << endl;
+            else cout << "3" << endl;
+        }
+    else {
+        b /= -2 * a;
+        a = b * b - c / a;
+        if (a >= 0) {
+            if (a < 1e-9) cout << "1 " << b;
+            else cout << "2 " << b - sqrt(a) << " " << b + sqrt(a);
+        } else cout << "0 ";
+    }
 }

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <map>
+#include <random>
 
 using namespace std;
 
@@ -170,3 +172,38 @@ int find_last_simple(int limit) {
     return simples.back();
 }
 
+
+void check_mapping(int n, int mod = INT_MAX) {
+    int cnt = 0, i;
+    vector <int> a(n);
+    for (i = 0; i < n; i++) {
+        long long ne = (rand() << 15) + rand();
+        a[i] = ne % mod;
+    }
+
+    int start = clock();
+
+    for (i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if (a[i] == a[j]) cnt ++;
+
+    int simple = clock() - start;
+    cout << "Simple:  " << cnt << " " << simple/1000. << " sec " << endl;
+
+    map <int, int> m;
+    for (auto e: a) m[e]++;
+    cnt = 0;
+
+    for (auto e: m)
+        cnt += e.second * (e.second - 1) / 2;
+
+    cout << "Mapping: " << cnt << " " << (clock() - start - simple)/1000. << " sec " << m.size() << endl;
+}
+
+
+int64_t rand_int(int64_t start, int64_t end) {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dist(start, end);
+    return dist(gen);
+}

@@ -8,3 +8,4 @@ void square_equation();
 void equation_system();
 void check_mapping(int n, int mod = INT_MAX);
 int64_t rand_int(int64_t start, int64_t end);
+void trials();

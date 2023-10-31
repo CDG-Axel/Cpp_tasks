@@ -1,3 +1,0 @@
-C:/Users/Underworld/Documents/CPP Projects/Cpp_tasks/cmake-build-debug/CMakeFiles/Cpp_tasks.dir
-C:/Users/Underworld/Documents/CPP Projects/Cpp_tasks/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Underworld/Documents/CPP Projects/Cpp_tasks/cmake-build-debug/CMakeFiles/rebuild_cache.dir

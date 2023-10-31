@@ -1,24 +1,24 @@
 #include <iostream>
 #include <vector>
-#include "stepik.h"
+#include "float.h"
+#include <iomanip>
 
 using namespace std;
 
 int main() {
-    int n, m, i, j, k, cnt, found = 0;
-    cin >> n >> m;
-    vector <vector <int>> a(n, vector<int> (m));
-
-    for (i = 0; i < n; ++i)
-        for (j = 0; j < m; ++j) cin >> a[i][j];
-    cin >> k;
-
-    for (i = 0; i < n && !found; ++i)
-        for (j = cnt = 0; j < m && !found; ++j)
-            if (a[i][j]) cnt = 0;
-            else if (++cnt >= k) found = i + 1;
-
-    cout << found << endl;
-    return 0;
+    int cnt = 0;
+    float b, mn = FLT_MAX, mx = 0, avg = 0;
+    cin >> b;
+    while (b > 0) {
+        avg += b;
+        cnt++;
+        mx = b > mx ? b : mx;
+        mn = b < mn ? b : mn;
+        cin >> b;
+    }
+    float diff = mx - mn - avg / cnt;
+    if (diff > 0) cout << "Difference of max and min is greater than average";
+    else
+        if (diff < 0) cout << "Difference of max and min is smaller than average";
+        else cout << "Difference of max and min equals to average";
 }
-

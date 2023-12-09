@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <map>
+#include <set>
 #include <random>
 
 using namespace std;
@@ -245,4 +246,55 @@ void trials() {
     }
 
     cout << cnt << endl;
+}
+
+void cpp_task_11_6() {
+    map <string, set<string>> dict;
+    int n, comma;
+    cin >> n >> ws;
+
+    while (n--) {
+        string word, desc;
+        cin >> word >> desc; // put "-" to desc there
+        do {
+            cin >> desc;
+            comma = desc.find(',');
+            dict[comma > 0 ? desc.substr(0, comma): desc].insert(word);
+        } while (comma > 0);
+    }
+
+    cout << dict.size() << endl;
+    for (auto d: dict) {
+        cout << d.first << " - ";
+        n = d.second.size();
+        for (auto word: d.second) cout << word << (--n ? ", " : "\n");
+    }
+}
+
+
+string lowercase(string s) {
+    string result;
+    for (auto c: s) result.push_back(tolower(c));
+    return result;
+}
+
+void cpp_task_11_7() {
+    map <string, set<string>> dict;
+    int n, errors = 0;
+    string word;
+    cin >> n;
+
+    while (n--) {
+        cin >> word;
+        dict[lowercase(word)].insert(word);
+    }
+
+    while (cin >> word) {
+        int capitals = 0;
+        for (auto c: word) capitals += c == toupper(c);
+        string lower = lowercase(word);
+        errors += capitals != 1 || dict.count(lower) && !dict[lower].count(word);
+    }
+
+    cout << errors;
 }

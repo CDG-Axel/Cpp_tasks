@@ -1,32 +1,27 @@
 #include <iostream>
-#include <map>
-#include <set>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-string lowercase(string s) {
-    string result;
-    for (auto c: s) result.push_back(tolower(c));
-    return result;
+typedef pair <string, float> pupil;
+
+bool compare(pupil a, pupil b) {
+    return a.second < b.second;
 }
 
 int main() {
-    map <string, set<string>> dict;
-    int n, errors = 0;
-    string word;
+    int n;
     cin >> n;
-
-    while (n--) {
-        cin >> word;
-        dict[lowercase(word)].insert(word);
+    vector <pupil> a(n);
+    for (int i = 0; i < n; i++) {
+        string ts;
+        int m1, m2, m3;
+        cin >> a[i].first >> ts >> m1 >> m2 >> m3;
+        a[i].first += " " + ts;
+        a[i].second = (m1 + m2 + m3) / 3.0;
     }
-
-    while (cin >> word) {
-        int capitals = 0;
-        for (auto c: word) capitals += c == toupper(c);
-        string lower = lowercase(word);
-        errors += capitals != 1 || dict.count(lower) && !dict[lower].count(word);
-    }
-
-    cout << errors;
+    stable_sort(a.begin(), a.end(), compare);
+    for (auto smb : a) cout << smb.first << endl;
+    return 0;
 }

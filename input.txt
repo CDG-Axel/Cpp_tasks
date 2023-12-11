@@ -1,6 +1,4 @@
-4
-cAnnot
-cannOt
-fOund
-pAge
-thE pAge cAnnot be fouNd
+3
+Markov Valeriy 5 5 4
+Sergey Petrov 1 1 1
+Petrov Petr 3 3 3

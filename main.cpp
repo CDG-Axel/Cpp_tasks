@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "nlogn.h"
 
 using namespace std;
 
@@ -11,17 +12,16 @@ bool compare(pupil a, pupil b) {
 }
 
 int main() {
-    int n;
-    cin >> n;
-    vector <pupil> a(n);
-    for (int i = 0; i < n; i++) {
-        string ts;
-        int m1, m2, m3;
-        cin >> a[i].first >> ts >> m1 >> m2 >> m3;
-        a[i].first += " " + ts;
-        a[i].second = (m1 + m2 + m3) / 3.0;
+    int start = clock();
+    long long sum = 0;
+    for (int i = 0; i < 200000; ++i) {
+        sum = sum % 123456;
+        sum = sum % 1324;
+        sum = sum % 12;
+        sum = sum % 12356;
+        for (int j = 0; j < 1000; ++j) {
+            sum += j;
+        }
     }
-    stable_sort(a.begin(), a.end(), compare);
-    for (auto smb : a) cout << smb.first << endl;
-    return 0;
+    cout << (clock() - start)/1000. << " sec";
 }

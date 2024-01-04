@@ -1,6 +1,7 @@
 #include "nlogn.h"
 #include <iostream>
 #include <map>
+#include <vector>
 
 using namespace std;
 
@@ -32,22 +33,49 @@ void multiple_fact() {
 }
 
 
-void task_2() {
+void process_dna() {
     map <int, string> d;
-    int n = 200000, a, b;
+    int n, a, b;
     int start = clock();
-    // cin >> n;
+    cin >> n;
+    string s;
     for (int i = 1; i <= n; i++) {
-        string s = "12345";
-        // cin >> s;
+        cin >> s;
         d[i] = s;
     }
     for (int i = n; i > 1; i--) {
-        // cin >> a >> b;
-        a = i, b = i - 1;
+        cin >> a >> b;
         d[b] += d[a];
         d.erase(a);
     }
-    cout << d[b] << endl;
+    cin >> s;
+    cout << d[b] << (s == d[b]? "\nTrue": "\nFalse") << endl;
+    cout << "Time: " << (clock() - start) / 1000. << " sec" << endl;
+}
+
+
+void process_dna_arr() {
+    int n, a, b;
+    int start = clock();
+    cin >> n;
+    vector <string> d(n + 1);
+    string s;
+    for (int i = 1; i <= n; i++) cin >> d[i];
+    for (int i = n; i > 1; i--) {
+        cin >> a >> b;
+        d[b] += d[a];
+        d[a] = "";
+    }
+    cin >> s;
+    cout << d[b] << (s == d[b]? "\nTrue": "\nFalse") << endl;
+    cout << "Time: " << (clock() - start) / 1000. << " sec" << endl;
+}
+
+
+void str_concat() {
+    string s;
+    int start = clock();
+    for (int i = 0; i < 200000; ++i) s += "12345";
+    cout << s.length() << endl;
     cout << "Time: " << (clock() - start) / 1000. << " sec" << endl;
 }

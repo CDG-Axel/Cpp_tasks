@@ -1,2 +1,4 @@
 void multiple_fact();
-void task_2();
+void process_dna();
+void process_dna_arr();
+void str_concat();

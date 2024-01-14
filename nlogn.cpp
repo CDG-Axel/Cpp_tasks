@@ -79,3 +79,25 @@ void str_concat() {
     cout << s.length() << endl;
     cout << "Time: " << (clock() - start) / 1000. << " sec" << endl;
 }
+
+
+typedef pair <string, float> pupil;
+
+bool compare(pupil a, pupil b) {
+    return a.second < b.second;
+}
+
+long long test_vector_pop(int n) {
+    long long p = 0, sum = 0, start = clock();
+
+    vector <int> a(n);
+    for (int i = 0; i < n; ++i) a[i] = i;
+    while (a.size() > 0) {
+        a[p++]++;
+        sum += a[0];
+        a.erase(a.begin());
+        if (p >= a.size()) p = 0;
+    }
+    cout << (clock() - start)/1000. << " sec" << endl;
+    return sum;
+}
